@@ -1,35 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-public class PlayerController : MonoBehaviour
+using UnityEngine.InputSystem;
+
+public class PlayerController2 : MonoBehaviour
 {
-    public float moveSpeed = 5f;
     private Rigidbody rb;
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>(); // cache component
-        Debug.Log("Awake: rb cached");
-    }
+
+    private float movementX;
+    private float movementY;
+
+    public float speed = 0;
+
     void Start()
     {
-        Debug.Log("Start: game begins");
+        rb = GetComponent<Rigidbody>();
     }
-    void Update()
+
+    private void OnMove(InputValue movementValue)
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 dir = new Vector3(h, 0, v).normalized;
-        // non-physics movement
-        transform.Translate(dir * moveSpeed * Time.deltaTime);
+        Vector2 movementVector = movementValue.Get<Vector2>();
+
+        movementX = movementVector.x;
+        movementY = movementVector.y;
     }
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
-        // use for physics: e.g., rb.MovePosition(...)
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Collided with " + collision.gameObject.name);
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Triggered by " + other.gameObject.name);
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+
+        rb.AddForce(movement * speed);
     }
 }
