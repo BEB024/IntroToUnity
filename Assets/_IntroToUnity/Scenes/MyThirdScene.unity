@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController2
   speed: 5
+  pickUpSound: {fileID: 8300000, guid: 4ca4c3801ab0d49cda6e620bac19d2e4, type: 3}
 --- !u!54 &55203846
 Rigidbody:
   m_ObjectHideFlags: 0

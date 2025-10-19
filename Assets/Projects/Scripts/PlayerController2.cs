@@ -14,6 +14,7 @@ public class PlayerController2 : MonoBehaviour
 
     public AudioClip pickUpSound;
     private AudioSource audioSource;
+    private AudioClip clip;
 
     void Start()
     {
@@ -57,4 +58,31 @@ public class PlayerController2 : MonoBehaviour
             }
         }
     }
+
+    //    //Plays the PickUp's audioSource
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (!other.CompareTag("PickUp")) return;
+
+    //    var pickupAS = other.GetComponent<AudioSource>();
+
+    //    if (pickupAS != null)
+    //    {
+    //        clip = pickupAS.clip;
+    //    }
+    //    else
+    //    {
+    //        clip = pickUpSound;
+    //    }
+
+    //    if (clip != null)
+    //    {
+    //        // Spawns a temporary AudioSource at the pickup’s position that persists after disabling
+    //        AudioSource.PlayClipAtPoint(clip, other.transform.position,
+    //                                    pickupAS ? pickupAS.volume : 1f);
+    //    }
+
+    //    other.gameObject.SetActive(false);
+    //}
+
 }
