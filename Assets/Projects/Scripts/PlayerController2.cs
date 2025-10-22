@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController2 : MonoBehaviour
 {
@@ -13,13 +14,24 @@ public class PlayerController2 : MonoBehaviour
     public float speed = 0;
 
     public AudioClip pickUpSound;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private AudioClip clip;
+
+    public TMP_Text scoreText;
+    public TMP_Text timerText;
+
+    private int scoreCounter;
+    private float timer = 60f;
+    private bool isRunning = true;
 
     void Start()
     {
+        scoreCounter = 0;
+        scoreText.text = "Score: " + scoreCounter;
+        timerText.text = "Time: 1:00";
+
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+        // audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -42,6 +54,16 @@ public class PlayerController2 : MonoBehaviour
         rb.AddForce(movement * speed);
     }
 
+    void Update()
+    {
+        if (isRunning)
+        {
+            timer -= Time.deltaTime;
+            int minutes = Mathf.FloorToInt(timer / 60);
+            int seconds = Mathf.FloorToInt(timer % 60);
+            timerText.text = $"Time: {minutes}:{seconds}";
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -51,12 +73,19 @@ public class PlayerController2 : MonoBehaviour
             {
                 other.gameObject.SetActive(false);
                 audioSource.Play();
+                SetScore();
             }
             else
             {
                 audioSource.PlayOneShot(pickUpSound);
             }
         }
+    }
+
+    void SetScore()
+    {
+        scoreCounter += 1;
+        scoreText.text = "Score: " + scoreCounter;
     }
 
     //    //Plays the PickUp's audioSource
